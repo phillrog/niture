@@ -113,7 +113,7 @@ resource "oci_core_security_list" "tcb_security_list" {
 }
 
 resource "oci_core_instance" "webserver1" {
-  availability_domain = data.oci_identity_availability_domain.ad.name
+  availability_domain = data.oci_identity_availability_domains.ads.availability_domains[2].name
   compartment_id      = var.compartment_ocid
   display_name        = "webserver1"
   shape               = "VM.Standard.E2.1.Micro"
