@@ -112,17 +112,11 @@ resource "oci_core_security_list" "tcb_security_list" {
   }
 }
 
-data "oci_identity_availability_domains" "ads" {
-  # O provedor OCI usará a região configurada para buscar a lista de ADs.
-  # Você precisa passar o OCID da sua Tenancy para que ele saiba onde procurar.
-  compartment_id = var.tenancy_ocid
-}
-
 resource "oci_core_instance" "webserver1" {
-  availability_domain = data.oci_identity_availability_domains.ads.availability_domains[2].name
+  availability_domain = data.oci_identity_availability_domain.ad.name
   compartment_id      = var.compartment_ocid
   display_name        = "webserver1"
-  shape               = "VM.Standard.E2.1.Micro"
+  shape               = "VM.Standard.E2.1"
 
   create_vnic_details {
     subnet_id        = oci_core_subnet.tcb_subnet.id
